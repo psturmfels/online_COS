@@ -7,7 +7,7 @@ end
 function [obj_val_round, mp_time_round, new_x_vals, temp_p_ratios, temp_w_ratios, round_ratios] = find_best_step(x_bar, weights, p_times, ind, max_processing_time)
     new_weights = weights(ind);
     new_p_times = p_times(:, ind);
-    obj_val_lin = dot(x_bar, 1 - weights);
+    obj_val_lin = dot(1 - x_bar, weights);
     len = max(size(x_bar));
     temp_p_ratios = zeros(1, len);
     temp_w_ratios = zeros(1, len);

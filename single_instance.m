@@ -10,7 +10,7 @@ weighted_sums = zeros(num_algorithms, 1);
 [weighted_sums(7), ~] = online_10(p_times, weights, release_times, 'mast', 'times');
 [weighted_sums(8), ~] = online_10(p_times, weights, release_times, 'mast', 'weight');
 
-[weighted_sums(9), ~] = online_10_boost(p_times, weights, release_times, 'find_best_alpha', 'mast');
+[weighted_sums(9), ~]  = online_10_boost(p_times, weights, release_times, 'find_best_alpha', 'mast');
 [weighted_sums(10), ~] = online_10_boost(p_times, weights, release_times, 'find_best_alpha', 'ratio');
 [weighted_sums(11), ~] = online_10_boost(p_times, weights, release_times, 'find_best_alpha', 'times');
 [weighted_sums(12), ~] = online_10_boost(p_times, weights, release_times, 'find_best_alpha', 'weight');
