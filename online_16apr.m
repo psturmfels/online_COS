@@ -29,11 +29,13 @@ while ~isempty(p_times)
     scheduled_indices = indices(x_bar_round);
     
     %Compute the weighted sum of completion times
-    for i = scheduled_indices
-        weighted_sum = weighted_sum + weights(i) * (tk );
+    for i = 1:length(scheduled_indices)
+        ct_i = max(sum(p_times(:, scheduled_indices(1:i)), 2));
+        weighted_sum = weighted_sum + weights(scheduled_indices(i)) * (tk + ct_i);
     end
     
-    
+   
+    %Drop scheduled jobs
     weights(scheduled_indices) = [];
     release_times(scheduled_indices) = [];
     p_times(:, scheduled_indices) = [];
