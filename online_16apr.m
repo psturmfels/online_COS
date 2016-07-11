@@ -34,6 +34,11 @@ while ~isempty(p_times)
         weighted_sum = weighted_sum + weights(scheduled_indices(i)) * (tk + ct_i);
     end
     
+    %Compute necessary length of current interval
+    tk_plus1 = max(tk_plus1, tk + max(sum(p_times(:, scheduled_indices), 2)));
+    %TODO FOR NEXT TIME: THE INTERVAL SIZES MAY CHANGE BASED ON ROUNDING.
+    %FIND OUT HOW LONG THIS INTERVAL SHOULD BE, AND ADJUST NEXT INTERVAL
+    %CORRESPONDINGLY
    
     %Drop scheduled jobs
     weights(scheduled_indices) = [];
