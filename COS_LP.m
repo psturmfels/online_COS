@@ -5,6 +5,8 @@ ub = lb + 1;
 Aeq = [];
 beq = []; 
 f = -1 * weights;
+num_machines = size(p_times); 
+num_machines = num_machines(1);
 b = zeros(num_machines, 1) + max_processing_time;
 
 x_bar = linprog(f, p_times, b, Aeq, beq, lb, ub, [], options);
