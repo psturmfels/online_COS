@@ -1,4 +1,11 @@
 function x_bar = COS_LP(weights, p_times, max_processing_time)
+%Solve the following linear program: 
+%minimize dot(weights, completion_times)
+%subject to p_times * completion_times <= max_processing_time
+% 0 <= completion_times <= 1
+%where completion_times and weights are vectors of length N,
+%and p_times is an MxN matrix.
+
 options = optimset('Display','none');
 lb = zeros(length(weights), 1);
 ub = lb + 1;

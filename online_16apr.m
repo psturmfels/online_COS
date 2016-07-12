@@ -1,4 +1,10 @@
 function [weighted_sum, completion_times] = online_16apr(p_times, weights, release_times)
+%An implementation of the polynomial-time 16-approximation algorithm
+%to the online concurrent open shop problem. The algorithm is 
+%described in Order Scheduling Models: Hardness and Algorithms
+%by Garg et al. 
+
+%Preliminary variables
 k = 0;
 weighted_sum = 0;
 tk = 0;
@@ -9,12 +15,12 @@ completion_times = zeros(length(weights), 1) - 1;
 ctindex = 1:length(weights);
 
 while ~isempty(p_times)
-    %Priliminary variables
+    %Define the interval
     interval_size = 2^k;
     tk = tk_plus1;
     tk_plus1 = tk + interval_size;
     
-    %the indices of the above jobs in p_times
+    %The indices of the above jobs in p_times
     indices = 1:length(weights);
     
     %Filter out jobs not yet released

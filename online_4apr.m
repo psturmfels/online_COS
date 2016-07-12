@@ -1,4 +1,10 @@
 function [weighted_sum, completion_times] = online_4apr(p_times, weights, release_times)
+%An implementation of the exponential-time 4-approximation algorithm
+%to the online concurrent open shop problem. The algorithm is 
+%described in Order Scheduling Models: Hardness and Algorithms
+%by Garg et al. 
+
+%Preliminary variables
 k = 0;
 weighted_sum = 0;
 tk = 0;
@@ -9,7 +15,7 @@ completion_times = zeros(length(weights), 1) - 1;
 ctindex = 1:length(weights);
 
 while ~isempty(p_times)
-    %Priliminary variables
+    %Define the current interval
     interval_size = 2^k;
     tk = tk_plus1;
     tk_plus1 = tk + interval_size;
@@ -31,6 +37,7 @@ while ~isempty(p_times)
     RA_indices = 1:length(RA_weights);
     [m, i] = min(max(RA_tk, [], 1));
     
+    %If there exists a job that fits in the interval
     if m <= interval_size
         scheduled_indices = i(1);
         best_weight = RA_weights(scheduled_indices);
