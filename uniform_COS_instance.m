@@ -1,4 +1,4 @@
-function [p_times, weights, release_times] = generate_COS_instance(num_jobs, num_machines, max_rt, max_p_time, max_weight)
+function [p_times, weights, release_times] = uniform_COS_instance(num_jobs, num_machines, max_rt, max_p_time, max_weight)
 if nargin < 5
     max_weight = 10;
 end

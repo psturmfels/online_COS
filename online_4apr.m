@@ -49,8 +49,6 @@ while ~isempty(p_times)
                 end
             end
         end
-        disp('scheduled_indices = ');
-        disp(scheduled_indices);%MARK REMOVE
         
         %Compute the weighted sum of completion times
         for i = 1:length(scheduled_indices)
