@@ -1,34 +1,49 @@
 function compare_online(num_jobs, num_machines, max_rt, max_p_time, max_weight)
 %Define the maximum number of points to plot
-max_points = 1000;
-x4 = zeros(max_points, 1);
+max_points = 100;
+yg = zeros(max_points, 1);
+y4 = zeros(max_points, 1);
 y16 = zeros(max_points, 1);
-h = plot(0);
+y16g = zeros(max_points, 1);
+
+%hg = plot(0);
+%hold on;
+%set(hg, 'Linestyle', 'none', 'Marker', '.');
+
+%h4 = plot(0);
+%hold on;
+%set(h4, 'Linestyle', 'none', 'Marker', '.');
+
+h16 = plot(0);
 hold on;
-set(h, 'Linestyle', 'none', 'Marker', '.');
-maxpoint = 0;
+set(h16, 'Linestyle', 'none', 'Marker', '.');
 
+h16g = plot(0);
+hold on;
+set(h16g, 'Linestyle', 'none', 'Marker', '.'); 
 
-for i = 1:max_points
+x_vals = 1:max_points;
+
+legend('16apr','16apr+greedy')
+
+%maxpoint = 0;
+decrease = zeros(max_points, 1);
+for i = x_vals;
     %Generate a new random instance of concurrent open shop
-    [p_times, weights, release_times] = targeted_COS_instance(num_jobs, num_machines, max_rt, max_p_time, max_weight);
-    
-    %plot the 16-approximation (using LP) on the y-axis
-    [y16(i), ~] = online_16apr(p_times, weights, release_times);
-    
-    %plot the 4-approximation (exponential time) on the x-axis
-    [x4(i), ~] = online_4apr(p_times, weights, release_times);
-    
-    set(h, 'XData', x4, 'YData', y16);
+    [p_times, weights, release_times] = targeted_COS_instance(num_jobs, num_machines, max_rt, max_p_time, max_weight + i);
+  
+%    [yg(i), ~] = greedy_scheduler(p_times, weights, release_times);
+%    [y4(i), ~] = apr4(p_times, weights, release_times);
+    [y16(i), ~] = apr16(p_times, weights, release_times);
+    [y16g(i), ~] = apr16_greedy(p_times, weights, release_times);
+    decrease(i) = (100 * (1 - y16g(i) / y16(i)));
+%    set(hg, 'XData', x_vals, 'YData', yg);
+%    set(h4, 'XData', x_vals, 'YData', y4);
+    set(h16, 'xData', x_vals, 'YData', y16);
+    set(h16g, 'xData', x_vals, 'YData', y16g);
     drawnow;
-    
-    %Record the maximum point value to draw the x = y line at the end
-    if y16(i) > maxpoint
-        maxpoint = y16(i);
-    end
-    if x4(i) > maxpoint
-        maxpoint = x4(i);
-    end
+   
 end
-plot([0, maxpoint], [0, maxpoint], [0, maxpoint], [0, maxpoint * 2], [0, maxpoint], [0, maxpoint / 2]);
+disp(mean(decrease));
+%plot([0, maxpoint], [0, maxpoint], [0, maxpoint], [0, maxpoint * 2], [0, maxpoint], [0, maxpoint / 2]);
 end

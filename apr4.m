@@ -1,5 +1,5 @@
-function [weighted_sum, completion_times] = online_16apr(p_times, weights, release_times)
-%An implementation of the polynomial-time 16-approximation algorithm
+function [weighted_sum, completion_times] = apr4(p_times, weights, release_times)
+%An implementation of the exponential-time 4-approximation algorithm
 %to the online concurrent open shop problem. The algorithm is 
 %described in Order Scheduling Models: Hardness and Algorithms
 %by Garg et al. 
@@ -15,12 +15,12 @@ completion_times = zeros(length(weights), 1) - 1;
 ctindex = 1:length(weights);
 
 while ~isempty(p_times)
-    %Define the interval
+    %Define the current interval
     interval_size = 2^k;
     tk = tk_plus1;
     tk_plus1 = tk + interval_size;
     
-    %The indices of the above jobs in p_times
+    %the indices of the above jobs in p_times
     indices = 1:length(weights);
     
     %Filter out jobs not yet released
@@ -30,15 +30,32 @@ while ~isempty(p_times)
         end
     end
     indices = indices(indices ~= -1);
-    if ~isempty(indices)
-        %The set of jobs to consider in this interval
-        RA_tk = p_times(:, indices);
-        RA_weights = weights(indices);
+    
+    %The set of jobs to consider in this interval
+    RA_tk = p_times(:, indices);
+    RA_weights = weights(indices);
+    RA_indices = 1:length(RA_weights);
+    [m, i] = min(max(RA_tk, [], 1));
+    
+    %If there exists a job that fits in the interval
+    if m <= interval_size
+        scheduled_indices = i(1);
+        best_weight = RA_weights(scheduled_indices);
         
-        %Solve and round the LP
-        x_bar = COS_LP(RA_weights, RA_tk, interval_size);
-        x_bar_round = floor(x_bar + 0.5001);
-        scheduled_indices = indices(x_bar_round == 1);
+        %Find maximal weight subset of RA_tk
+        for i = RA_indices
+            subsets_i = nchoosek(RA_indices, i);
+            for test_set = subsets_i.'
+                test_set_size = max(sum(RA_tk(:, test_set), 2));
+                if test_set_size <= interval_size
+                    test_set_weight = sum(RA_weights(test_set));
+                    if test_set_weight > best_weight
+                        best_weight = test_set_weight;
+                        scheduled_indices = test_set;
+                    end
+                end
+            end
+        end
         
         %Compute the weighted sum of completion times
         for i = 1:length(scheduled_indices)
@@ -55,9 +72,8 @@ while ~isempty(p_times)
         weights(scheduled_indices) = [];
         release_times(scheduled_indices) = [];
         p_times(:, scheduled_indices) = [];
-        
     end
-    
+    %Update interval
     k = k + 1;
 end
 end
