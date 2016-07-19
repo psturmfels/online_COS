@@ -1,4 +1,4 @@
-function [weighted_sum, completion_times] = greedy_scheduler(p_times, weights, release_times)
+function [weighted_sum, completion_times] = greedy1(p_times, weights, release_times)
 %A function that greedily schedules jobs as they come based on
 %weight to processing time (on most loaded machine) ratio.
 %Assumes jobs are ordered by non-decreasing release-times.
