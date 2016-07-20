@@ -34,7 +34,7 @@ legend('greedy', '16apr','16apr+greedy') %,'16apr+alpha')
 %maxpoint = 0;
 for i = x_vals;
     %Generate a new random instance of concurrent open shop
-    [p_times, weights, release_times] = skewed_COS_instance(num_jobs, num_machines, max_rt, max_p_time, max_weight + i);
+    [p_times, weights, release_times] = targeted_COS_instance(num_jobs, num_machines, max_rt, max_p_time, max_weight + i);
   
     [yg(i), ~] = greedy2(p_times, weights, release_times);
 %    [y4(i), ~] = apr4(p_times, weights, release_times);
