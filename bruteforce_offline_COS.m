@@ -18,12 +18,13 @@ perm = 1:num_jobs;
 
 %iterate over all permutations
 for indices = perms(1:num_jobs).'
-    current_wcs = get_weighted_sum(p_times(:, indices), weights);
+    current_wcs = get_weighted_sum(p_times(:, indices), weights(indices));
     if current_wcs < wcs
        wcs = current_wcs; 
        perm = indices;
     end
 end
+perm = perm.';
 end
 
 function wcs = get_weighted_sum(p_times, weights)
