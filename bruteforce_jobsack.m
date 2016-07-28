@@ -41,4 +41,5 @@ if m <= D
             end
         end
     end
+subset = subset.'; 
 end
