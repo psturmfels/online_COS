@@ -14,7 +14,7 @@ num_jobs = size(p_times, 2);
 
 %guarenteed to be greater than or equal to the objective function 
 wcs = get_weighted_sum(p_times, weights);
-perm = 1:num_jobs;
+perm = (1:num_jobs).';
 
 %iterate over all permutations
 for indices = perms(1:num_jobs).'
