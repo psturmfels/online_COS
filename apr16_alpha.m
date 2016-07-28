@@ -1,4 +1,7 @@
 function [weighted_sum, completion_times] = apr16_alpha(p_times, weights, release_times)
+% A modification of apr16 that chooses the best "alpha" value
+% to round by at each interval (instead of always choosing 1/2).
+
 
 %Preliminary variables
 k = 0;

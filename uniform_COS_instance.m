@@ -1,6 +1,6 @@
 function [p_times, weights, release_times] = uniform_COS_instance(num_jobs, num_machines, max_rt, max_p_time, max_weight)
-%A function to generate a uniformly random instance of concurrent open
-%shop.
+% A function to generate a uniformly random instance of concurrent open
+% shop.
 
 %Generate weights, release times and processing times uniformly on the
 %interval. Weights are always non-zero.

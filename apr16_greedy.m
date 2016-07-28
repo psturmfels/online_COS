@@ -1,4 +1,6 @@
 function [weighted_sum, completion_times] = apr16_greedy(p_times, weights, release_times)
+% A modification of apr16 that orders the jobs greedily within intervals.
+
 
 %Preliminary variables
 k = 0;

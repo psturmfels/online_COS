@@ -1,6 +1,6 @@
 function [p_times, weights, release_times] = targeted_COS_instance(num_jobs, num_machines, max_rt, max_p_time, max_weight)
-%A function to generate an instance of online concurrent open shop with
-%five specific types of jobs.
+% A function to generate an instance of online concurrent open shop with
+% five specific types of jobs.
 
 %short, low-weight jobs
 slw_p_times = randi(floor(max_p_time / 4) + 1, num_machines, floor(num_jobs / 5)) - 1;

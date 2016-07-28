@@ -1,7 +1,7 @@
 function [weighted_sum, completion_times] = greedy1(p_times, weights, release_times)
-%A function that greedily schedules jobs as they come based on
-%weight to processing time (on most loaded machine) ratio.
-%Assumes jobs are ordered by non-decreasing release-times.
+% A function that greedily schedules jobs as they come based on
+% weight to processing time (on most loaded machine) ratio.
+% Assumes jobs are ordered by non-decreasing release-times.
 
 machine_times = zeros(size(p_times, 1), 1) + min(release_times);
 weighted_sum = 0;

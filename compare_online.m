@@ -1,4 +1,5 @@
 function compare_online(num_jobs, num_machines, max_rt, max_p_time, max_weight)
+
 %Define the maximum number of points to plot
 max_points = 100;
 yg = zeros(max_points, 1);

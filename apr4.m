@@ -1,8 +1,8 @@
 function [weighted_sum, completion_times] = apr4(p_times, weights, release_times)
-%An implementation of the exponential-time 4-approximation algorithm
-%to the online concurrent open shop problem. The algorithm is 
-%described in Order Scheduling Models: Hardness and Algorithms
-%by Garg et al. 
+% An implementation of the exponential-time 4-approximation algorithm
+% to the online concurrent open shop problem. The algorithm is 
+% described in Order Scheduling Models: Hardness and Algorithms
+% by Garg et al. 
 
 %Preliminary variables
 k = 0;
