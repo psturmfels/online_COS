@@ -1,4 +1,4 @@
-function [perm, wcs] = bruteforce_offline_COS(weights, p_times)
+function [perm, wcs] = offline_bf(weights, p_times)
 % A function that optimally solves an instance of concurrent open shop
 % (with objective function as sum of weighted completion times)
 % by trying all permuations of jobs.

@@ -34,7 +34,7 @@ while ~isempty(p_times)
         RA_weights = weights(indices);
         
         %Choose jobs for this current interval
-        subset = MUWP_LP(RA_weights, RA_tk, interval_size);
+        subset = MUWP_garg(RA_weights, RA_tk, interval_size);
         scheduled_indices = indices(subset);
         
         %Compute the weighted sum of completion times

@@ -32,7 +32,7 @@ while ~isempty(p_times)
         RA_weights = weights(indices);
         
         %Choose jobs to schedule in this interval
-        subset = MUWP_LP(RA_weights, RA_tk, interval_size);
+        subset = MUWP_garg(RA_weights, RA_tk, interval_size);
         scheduled_indices = indices(subset);
         
         %Define the order in which to schedule jobs in the interval

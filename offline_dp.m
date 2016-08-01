@@ -1,4 +1,4 @@
-function [perm, wcs] = dp_offline_COS(weights, p_times)
+function [perm, wcs] = offline_dp(weights, p_times)
 % A function that optimally solves an instance of concurrent open shop
 % (with objective function as sum of weighted completion times)
 % using an exponential dynamic programming algorithm.
@@ -52,4 +52,19 @@ end
 
 [wcs, perm_index] = min(C_prev);
 perm = next_perms(perm_index, :);
+end
+
+function index = comb_order(combination, n, k)
+% Given a k-combination 'combination 'of [n], 
+% returns the index of combination within nchoosek(n, k);
+
+index = 1;
+j = 0;
+for i = 1:k
+    j = j + 1;
+    while j ~= combination(i)
+        index = index + nchoosek(n - j, k - i);
+        j = j + 1;
+    end
+end
 end
