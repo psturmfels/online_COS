@@ -5,8 +5,6 @@ function [weighted_sum, completion_times] = apr10(p_times, weights, release_time
 %Preliminary variables
 k = 0;
 weighted_sum = 0;
-tk = 0;
-tk_plus1 = 0;
 completion_times = zeros(length(weights), 1) - 1;
 
 %Indexing vector to keep track of completion times

@@ -7,8 +7,6 @@ function [weighted_sum, completion_times] = apr16(p_times, weights, release_time
 %Preliminary variables
 k = 0;
 weighted_sum = 0;
-tk = 0;
-tk_plus1 = 0;
 completion_times = zeros(length(weights), 1) - 1;
 
 %Indexing vector to keep track of completion times
@@ -45,9 +43,6 @@ while ~isempty(p_times)
             completion_times(ctindex(scheduled_indices(i))) = ct_i;
             weighted_sum = weighted_sum + weights(scheduled_indices(i)) * (ct_i);
         end
-        
-        %Compute necessary length of current interval
-        tk_plus1 = max(tk_plus1, tk + max(sum(p_times(:, scheduled_indices), 2)));
         
         %Drop scheduled jobs
         ctindex(scheduled_indices) = [];
