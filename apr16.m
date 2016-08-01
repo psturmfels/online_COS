@@ -17,8 +17,8 @@ ctindex = 1:length(weights);
 while ~isempty(p_times)
     %Define the interval
     interval_size = 2^k;
-    tk = tk_plus1;
-    tk_plus1 = tk + interval_size;
+    tk = 2^k - 1;
+    tk_plus1 = 2^(k + 1) - 1;
     
     %The indices of the above jobs in p_times
     indices = 1:length(weights);
@@ -42,7 +42,7 @@ while ~isempty(p_times)
         
         %Compute the weighted sum of completion times
         for i = 1:length(scheduled_indices)
-            ct_i = max(sum(p_times(:, scheduled_indices(1:i)), 2)) + tk;
+            ct_i = max(sum(p_times(:, scheduled_indices(1:i)), 2)) + tk_plus1;
             completion_times(ctindex(scheduled_indices(i))) = ct_i;
             weighted_sum = weighted_sum + weights(scheduled_indices(i)) * (ct_i);
         end

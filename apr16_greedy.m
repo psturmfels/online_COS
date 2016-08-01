@@ -15,8 +15,8 @@ ctindex = 1:length(weights);
 while ~isempty(p_times)
     %Define the interval
     interval_size = 2^k;
-    tk = tk_plus1;
-    tk_plus1 = tk + interval_size;
+    tk = 2^k - 1;
+    tk_plus1 = 2^(k + 1) - 1;
     
     %The indices of the above jobs in p_times
     indices = 1:length(weights);
@@ -40,30 +40,31 @@ while ~isempty(p_times)
         
         remaining_indices = scheduled_indices;
         permutation = [];
+        RA_weights = weights;
+        
         while ~isempty(remaining_indices)
             [~, max_loaded_machine] = max(sum(p_times(:, remaining_indices) , 2));
-            ratios = weights(remaining_indices) ./ p_times(max_loaded_machine, remaining_indices).';
+            ratios = RA_weights(remaining_indices) ./ p_times(max_loaded_machine, remaining_indices).';
             worst_job = find(ratios == min(ratios));
+            worst_job = worst_job(1);
+            theta = RA_weights(remaining_indices(worst_job)) / p_times(max_loaded_machine, remaining_indices(worst_job));
+            RA_weights(remaining_indices) = RA_weights(remaining_indices) - theta * p_times(max_loaded_machine, remaining_indices).';
             permutation = [remaining_indices(worst_job), permutation];
             remaining_indices(worst_job) = [];
         end
         
         %Compute the weighted sum of completion times
         for i = 1:length(permutation)
-            ct_i = max(sum(p_times(:, permutation(1:i)), 2)) + tk;
+            ct_i = max(sum(p_times(:, permutation(1:i)), 2)) + tk_plus1;
             completion_times(ctindex(permutation(i))) = ct_i;
             weighted_sum = weighted_sum + weights(permutation(i)) * (ct_i);
         end
-        
-        %Compute necessary length of current interval
-        tk_plus1 = max(tk_plus1, tk + max(sum(p_times(:, scheduled_indices), 2)));
         
         %Drop scheduled jobs
         ctindex(scheduled_indices) = [];
         weights(scheduled_indices) = [];
         release_times(scheduled_indices) = [];
         p_times(:, scheduled_indices) = [];
-        
     end
     
     k = k + 1;
