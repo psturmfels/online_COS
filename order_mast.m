@@ -1,4 +1,7 @@
 function [permutation] = order_mast(p_times, weights)
+% Given a set of jobs with weights, returns a permutation 
+% of jobs that results in a 2-approximation for weighted
+% completion time (Mastrolilli et al.)
 
 num_jobs = length(weights);
 permutation = 1:num_jobs;

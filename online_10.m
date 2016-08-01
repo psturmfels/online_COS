@@ -1,6 +1,7 @@
 function [weighted_sum, completion_times] = online_10(p_times, weights, release_times)
-% A modification of apr16 that orders the jobs greedily within intervals.
-
+% A modification of online_16 that orders the jobs within each interval
+% using an offline 2-approximation algorithm by Mastrolilli et al. 
+% This ordering results in a provably better bound.
 
 %Preliminary variables
 k = 0;
