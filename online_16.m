@@ -1,6 +1,8 @@
-function [weighted_sum, completion_times] = apr10(p_times, weights, release_times)
-% A modification of apr16 that orders the jobs greedily within intervals.
-
+function [weighted_sum, completion_times] = online_16(p_times, weights, release_times)
+% An implementation of the polynomial-time 16-approximation algorithm
+% to the online concurrent open shop problem. The algorithm is 
+% described in Order Scheduling Models: Hardness and Algorithms
+% by Garg et al. 
 
 %Preliminary variables
 k = 0;
@@ -31,19 +33,15 @@ while ~isempty(p_times)
         RA_tk = p_times(:, indices);
         RA_weights = weights(indices);
         
-        %Choose jobs to schedule in this interval
+        %Choose jobs for this current interval
         subset = MUWP_garg(RA_weights, RA_tk, interval_size);
         scheduled_indices = indices(subset);
         
-        %Define the order in which to schedule jobs in the interval
-        permutation = order_mast(p_times(:, scheduled_indices), weights(scheduled_indices));
-        permutation = scheduled_indices(permutation);
-        
         %Compute the weighted sum of completion times
-        for i = 1:length(permutation)
-            ct_i = max(sum(p_times(:, permutation(1:i)), 2)) + tk_plus1;
-            completion_times(ctindex(permutation(i))) = ct_i;
-            weighted_sum = weighted_sum + weights(permutation(i)) * (ct_i);
+        for i = 1:length(scheduled_indices)
+            ct_i = max(sum(p_times(:, scheduled_indices(1:i)), 2)) + tk_plus1;
+            completion_times(ctindex(scheduled_indices(i))) = ct_i;
+            weighted_sum = weighted_sum + weights(scheduled_indices(i)) * (ct_i);
         end
         
         %Drop scheduled jobs
@@ -51,6 +49,7 @@ while ~isempty(p_times)
         weights(scheduled_indices) = [];
         release_times(scheduled_indices) = [];
         p_times(:, scheduled_indices) = [];
+        
     end
     
     k = k + 1;

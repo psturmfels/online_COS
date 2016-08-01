@@ -1,4 +1,4 @@
-function [weighted_sum, completion_times] = greedy(p_times, weights, release_times)
+function [weighted_sum, completion_times] = online_greedy(p_times, weights, release_times)
 % Schedules one job greedily, waits for free space,
 % and then schedules the next job greedily from the currently
 % available jobs
