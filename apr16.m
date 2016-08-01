@@ -35,10 +35,9 @@ while ~isempty(p_times)
         RA_tk = p_times(:, indices);
         RA_weights = weights(indices);
         
-        %Solve and round the LP
-        x_bar = COS_LP(RA_weights, RA_tk, interval_size);
-        x_bar_round = floor(x_bar + 0.5001);
-        scheduled_indices = indices(x_bar_round == 1);
+        %Choose jobs for this current interval
+        subset = MUWP_LP(RA_weights, RA_tk, interval_size);
+        scheduled_indices = indices(subset);
         
         %Compute the weighted sum of completion times
         for i = 1:length(scheduled_indices)

@@ -40,7 +40,7 @@ for i = x_vals;
 %    [yg(i), ~] = greedy2(p_times, weights, release_times);
 %    [y4(i), ~] = apr4(p_times, weights, release_times);
     [y16(i), ~] = apr16(p_times, weights, release_times);
-    [y16g(i), ~] = apr16_greedy(p_times, weights, release_times);
+    [y16g(i), ~] = apr10(p_times, weights, release_times);
     %[y16a(i), ~] = apr16_alpha(p_times, weights, release_times);
     
 %    set(hg, 'XData', x_vals, 'YData', yg);

@@ -1,4 +1,4 @@
-function [weighted_sum, completion_times] = apr16_greedy(p_times, weights, release_times)
+function [weighted_sum, completion_times] = apr10(p_times, weights, release_times)
 % A modification of apr16 that orders the jobs greedily within intervals.
 
 
@@ -33,25 +33,13 @@ while ~isempty(p_times)
         RA_tk = p_times(:, indices);
         RA_weights = weights(indices);
         
-        %Solve and round the LP
-        x_bar = COS_LP(RA_weights, RA_tk, interval_size);
-        x_bar_round = floor(x_bar + 0.5001);
-        scheduled_indices = indices(x_bar_round == 1);
+        %Choose jobs to schedule in this interval
+        subset = MUWP_LP(RA_weights, RA_tk, interval_size);
+        scheduled_indices = indices(subset);
         
-        remaining_indices = scheduled_indices;
-        permutation = [];
-        RA_weights = weights;
-        
-        while ~isempty(remaining_indices)
-            [~, max_loaded_machine] = max(sum(p_times(:, remaining_indices) , 2));
-            ratios = RA_weights(remaining_indices) ./ p_times(max_loaded_machine, remaining_indices).';
-            worst_job = find(ratios == min(ratios));
-            worst_job = worst_job(1);
-            theta = RA_weights(remaining_indices(worst_job)) / p_times(max_loaded_machine, remaining_indices(worst_job));
-            RA_weights(remaining_indices) = RA_weights(remaining_indices) - theta * p_times(max_loaded_machine, remaining_indices).';
-            permutation = [remaining_indices(worst_job), permutation];
-            remaining_indices(worst_job) = [];
-        end
+        %Define the order in which to schedule jobs in the interval
+        permutation = order_mast(p_times(:, scheduled_indices), weights(scheduled_indices));
+        permutation = scheduled_indices(permutation);
         
         %Compute the weighted sum of completion times
         for i = 1:length(permutation)
