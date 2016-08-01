@@ -1,4 +1,4 @@
-function x_bar = MUWP_LP(weights, p_times, max_processing_time)
+function [x_bar] = MUWP_LP(weights, p_times, max_processing_time)
 % Solve the following linear program: 
 %   minimize:   
 %       dot(weights, completion_times)
