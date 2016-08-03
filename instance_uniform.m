@@ -20,6 +20,6 @@ release_times = sort(randi(max_r + 1, N, 1) - 1);
 p_times = randi(max_p, M, N);
 for job = 1:N
    num_zeros = randi([1, floor(M / 3)]);
-   p_times(randsample(N, num_zeros), job) = zeros(num_zeros, 1);
+   p_times(randsample(M, num_zeros), job) = zeros(num_zeros, 1);
 end
 end
