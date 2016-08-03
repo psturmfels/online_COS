@@ -1,55 +1,25 @@
-function compare_online(num_jobs, num_machines, max_rt, max_p_time, max_weight)
+function compare_online()
 
-%Define the maximum number of points to plot
-max_points = 100;
-%yg = zeros(max_points, 1);
-%y4 = zeros(max_points, 1);
-y16 = zeros(max_points, 1);
-y16g = zeros(max_points, 1);
-%y16a = zeros(max_points, 1);
+num_instances = 100;
+N = 100;        % Number of jobs
+M = 30;         % Number of machines
+max_r = 500;    % Maximum release time
+max_p = 500;    % Maximum processing time
+max_w = 60;     % Maximum weight
 
-%hg = plot(0);
-%hold on;
-%set(hg, 'Linestyle', 'none', 'Marker', '.');
+load psparse.mat;
+clear; 
+load rsparse.mat;
+clear;
 
-%h4 = plot(0);
-%hold on;
-%set(h4, 'Linestyle', 'none', 'Marker', '.');
+load pdense.mat;
+clear; 
+load rdense.mat;
+clear; 
 
-h16 = plot(0);
-hold on;
-set(h16, 'Linestyle', 'none', 'Marker', '.');
+load puniform.mat;
+clear; 
+load runiform.mat;
+clear; 
 
-h16g = plot(0);
-hold on;
-set(h16g, 'Linestyle', 'none', 'Marker', '.'); 
-
-%h16a = plot(0);
-%hold on;
-%set(h16a, 'Linestyle', 'none', 'Marker', '.'); 
-
-x_vals = 1:max_points;
-
-legend('16apr','16apr+greedy') %,'16apr+alpha')
-
-%maxpoint = 0;
-for i = x_vals;
-    %Generate a new random instance of concurrent open shop
-    [p_times, weights, release_times] = targeted_COS_instance(num_jobs, num_machines, max_rt, max_p_time, max_weight + i);
-  
-%    [yg(i), ~] = greedy2(p_times, weights, release_times);
-%    [y4(i), ~] = apr4(p_times, weights, release_times);
-    [y16(i), ~] = apr16(p_times, weights, release_times);
-    [y16g(i), ~] = apr10(p_times, weights, release_times);
-    %[y16a(i), ~] = apr16_alpha(p_times, weights, release_times);
-    
-%    set(hg, 'XData', x_vals, 'YData', yg);
-%    set(h4, 'XData', x_vals, 'YData', y4);
-    set(h16, 'xData', x_vals, 'YData', y16);
-    set(h16g, 'xData', x_vals, 'YData', y16g);
-%    set(h16a, 'xData', x_vals, 'YData', y16a);
-    drawnow;
-   
-end
-%plot([0, maxpoint], [0, maxpoint], [0, maxpoint], [0, maxpoint * 2], [0, maxpoint], [0, maxpoint / 2]);
 end

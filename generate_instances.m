@@ -1,7 +1,8 @@
-function generate_instances(num_instances)
+function generate_instances()
 % A function that generates a set number of instances of online 
 % concurrent open shop from each of 6 specified groups.
 
+num_instances = 100;
 N = 100;        % Number of jobs
 M = 30;         % Number of machines
 max_r = 500;    % Maximum release time
