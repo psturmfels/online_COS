@@ -1,4 +1,4 @@
-function [p_times, weights, release_times] = skewed_COS_instance(num_jobs, num_machines, max_rt, max_p_time, max_weight)
+function [p_times, weights, release_times] = instance_skewed(num_jobs, num_machines, max_rt, max_p_time, max_weight)
 % Generate a COS instance with jobs that have 0 processing time on at 
 % least half of the machines
 

@@ -1,4 +1,4 @@
-function [p_times, weights, release_times] = targeted_COS_instance(num_jobs, num_machines, max_rt, max_p_time, max_weight)
+function [p_times, weights, release_times] = instance_targeted(num_jobs, num_machines, max_rt, max_p_time, max_weight)
 % A function to generate an instance of online concurrent open shop with
 % five specific types of jobs.
 
