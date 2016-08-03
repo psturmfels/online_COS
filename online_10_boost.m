@@ -16,7 +16,7 @@ ctindex = 1:length(weights);
 
 while ~isempty(p_times)
     %Define the interval
-    tk = tk_plus1;
+    tk = max(tk_plus1, max(release_times));
     interval_size = 2^k;
     tk_plus1 = tk + interval_size; 
     
