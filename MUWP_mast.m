@@ -40,8 +40,11 @@ for break_index = 1:(num_jobs - 1)
    end
 end
 
-[~, add_index] = max(RA_weights(permutation((break_index + 1):num_jobs)));
-add_index = add_index + break_index;
-
-subset = [permutation(1:break_index), permutation(add_index)];
+if break_index < num_jobs
+    [~, add_index] = max(RA_weights(permutation((break_index + 1):num_jobs)));
+    add_index = add_index(1) + break_index;
+    subset = [permutation(1:break_index), permutation(add_index)];
+else
+    subset = [permutation];
+end
 end

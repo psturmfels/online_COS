@@ -1,8 +1,8 @@
-function [weighted_sum, completion_times] = online_10_boost(p_times, weights, release_times)
+function [weighted_sum, completion_times] = online_10_boost(p_times, weights, release_times, MUWP, order)
 % A modification of online_16 that orders the jobs within each interval
-% using an offline 2-approximation algorithm by Mastrolilli et al. 
+% using an offline 2-approximation algorithm by Mastrolilli et al.
 % This ordering results in a provably better bound.
-% Furthermore, each interval is only extended as much as necessary, 
+% Furthermore, each interval is only extended as much as necessary,
 % jobs are scheduled immediately in the next interval.
 
 %Preliminary variables
@@ -18,7 +18,7 @@ while ~isempty(p_times)
     %Define the interval
     tk = max(tk_plus1, max(release_times));
     interval_size = 2^k;
-    tk_plus1 = tk + interval_size; 
+    tk_plus1 = tk + interval_size;
     
     %The indices of the above jobs in p_times
     indices = 1:length(weights);
@@ -37,6 +37,7 @@ while ~isempty(p_times)
         RA_weights = weights(indices);
         
         %Choose jobs to schedule in this interval
+        subset = -1;
         switch MUWP
             case 'garg'
                 subset = MUWP_garg(RA_weights, RA_tk, interval_size);
@@ -47,40 +48,45 @@ while ~isempty(p_times)
             case 'relaxtime'
                 subset = MUWP_relaxtime(RA_weights, RA_tk, interval_size);
             otherwise
-                disp('Invalid MUWP value. Exiting function')
+                fprintf('Invalid MUWP value "%s". Exiting function\n', MUWP);
                 return
         end
-        scheduled_indices = indices(subset);
+        scheduled_indices = indices(subset == 1);
         
-        %Define the order in which to schedule jobs in the interval
-        switch order
-            case 'mast'  
-                permutation = order_mast(p_times(:, scheduled_indices), weights(scheduled_indices));
-            case 'ratio'
-                permutation = order_ratio(p_times(:, scheduled_indices), weights(scheduled_indices));
-            case 'times'
-                permutation = order_times(p_times(:, scheduled_indices), weights(scheduled_indices));
-            case 'weight'
-                permutation = order_weight(p_times(:, scheduled_indices), weights(scheduled_indices));
-            otherwise
+        if ~isempty(scheduled_indices)
+            %Define the order in which to schedule jobs in the interval
+            permutation = -1;
+            switch order
+                case 'mast'
+                    permutation = order_mast(p_times(:, scheduled_indices), weights(scheduled_indices));
+                case 'ratio'
+                    permutation = order_ratio(p_times(:, scheduled_indices), weights(scheduled_indices));
+                case 'times'
+                    permutation = order_times(p_times(:, scheduled_indices), weights(scheduled_indices));
+                case 'weight'
+                    permutation = order_weight(p_times(:, scheduled_indices), weights(scheduled_indices));
+                otherwise
+                    fprintf('Invalid order value "%s". Exiting function\n', order);
+                    return;
+            end
+            permutation = scheduled_indices(permutation);
+            
+            %Compute the weighted sum of completion times
+            for i = 1:length(permutation)
+                ct_i = max(sum(p_times(:, permutation(1:i)), 2)) + tk;
+                completion_times(ctindex(permutation(i))) = ct_i;
+                weighted_sum = weighted_sum + weights(permutation(i)) * (ct_i);
+            end
+            
+            %Calculate the end of this interval
+            tk_plus1 = max(sum(p_times(:, permutation), 2)) + tk;
+            
+            %Drop scheduled jobs
+            ctindex(scheduled_indices) = [];
+            weights(scheduled_indices) = [];
+            release_times(scheduled_indices) = [];
+            p_times(:, scheduled_indices) = [];
         end
-        permutation = scheduled_indices(permutation);
-        
-        %Compute the weighted sum of completion times
-        for i = 1:length(permutation)
-            ct_i = max(sum(p_times(:, permutation(1:i)), 2)) + tk;
-            completion_times(ctindex(permutation(i))) = ct_i;
-            weighted_sum = weighted_sum + weights(permutation(i)) * (ct_i);
-        end
-        
-        %Calculate the end of this interval
-        tk_plus1 = max(sum(p_times(:, permutation), 2)) + tk;
-        
-        %Drop scheduled jobs
-        ctindex(scheduled_indices) = [];
-        weights(scheduled_indices) = [];
-        release_times(scheduled_indices) = [];
-        p_times(:, scheduled_indices) = [];
     end
     
     k = k + 1;

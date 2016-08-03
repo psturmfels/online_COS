@@ -1,8 +1,8 @@
 function [weighted_sum, completion_times] = online_16(p_times, weights, release_times, MUWP)
 % An implementation of the polynomial-time 16-approximation algorithm
-% to the online concurrent open shop problem. The algorithm is 
+% to the online concurrent open shop problem. The algorithm is
 % described in Order Scheduling Models: Hardness and Algorithms
-% by Garg et al. 
+% by Garg et al.
 
 %Preliminary variables
 k = 0;
@@ -34,6 +34,7 @@ while ~isempty(p_times)
         RA_weights = weights(indices);
         
         %Choose jobs for this current interval
+        subset = -1;
         switch MUWP
             case 'garg'
                 subset = MUWP_garg(RA_weights, RA_tk, interval_size);
@@ -44,24 +45,25 @@ while ~isempty(p_times)
             case 'relaxtime'
                 subset = MUWP_relaxtime(RA_weights, RA_tk, interval_size);
             otherwise
-                disp('Invalid MUWP value. Exiting function')
+                fprintf('Invalid MUWP value "%s". Exiting function\n', MUWP);
                 return
         end
-        scheduled_indices = indices(subset);
+        scheduled_indices = indices(subset == 1);
         
-        %Compute the weighted sum of completion times
-        for i = 1:length(scheduled_indices)
-            ct_i = max(sum(p_times(:, scheduled_indices(1:i)), 2)) + tk_plus1;
-            completion_times(ctindex(scheduled_indices(i))) = ct_i;
-            weighted_sum = weighted_sum + weights(scheduled_indices(i)) * (ct_i);
+        if ~isempty(scheduled_indices)
+            %Compute the weighted sum of completion times
+            for i = 1:length(scheduled_indices)
+                ct_i = max(sum(p_times(:, scheduled_indices(1:i)), 2)) + tk_plus1;
+                completion_times(ctindex(scheduled_indices(i))) = ct_i;
+                weighted_sum = weighted_sum + weights(scheduled_indices(i)) * (ct_i);
+            end
+            
+            %Drop scheduled jobs
+            ctindex(scheduled_indices) = [];
+            weights(scheduled_indices) = [];
+            release_times(scheduled_indices) = [];
+            p_times(:, scheduled_indices) = [];
         end
-        
-        %Drop scheduled jobs
-        ctindex(scheduled_indices) = [];
-        weights(scheduled_indices) = [];
-        release_times(scheduled_indices) = [];
-        p_times(:, scheduled_indices) = [];
-        
     end
     
     k = k + 1;
