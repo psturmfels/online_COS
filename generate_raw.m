@@ -4,7 +4,7 @@ function generate_raw()
 % algorithms in this repository.
 
 
-num_instances = 2;
+num_instances = 1;
 num_algorithms = 34;
 N = 10;        % Number of jobs
 M = 3;         % Number of machines
@@ -94,5 +94,5 @@ for MUWP = MUWPS.'
 end
 [weighted_sums(a), completion_times(:, a)] = online_greedy(p_times, weights, release_times);
 a = a + 1;
-[weighted_sums(a), completion_times(:, a)] = online_16(p_times, weights, release_times, 'garg');
+[weighted_sums(a), completion_times(:, a)] = online_16(p_times, weights, release_times);
 end

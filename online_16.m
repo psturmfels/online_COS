@@ -1,4 +1,4 @@
-function [weighted_sum, completion_times] = online_16(p_times, weights, release_times, MUWP)
+function [weighted_sum, completion_times] = online_16(p_times, weights, release_times)
 % An implementation of the polynomial-time 16-approximation algorithm
 % to the online concurrent open shop problem. The algorithm is
 % described in Order Scheduling Models: Hardness and Algorithms
@@ -34,20 +34,7 @@ while ~isempty(p_times)
         RA_weights = weights(indices);
         
         %Choose jobs for this current interval
-        subset = -1;
-        switch MUWP
-            case 'garg'
-                subset = MUWP_garg(RA_weights, RA_tk, interval_size);
-            case 'mast'
-                subset = MUWP_mast(RA_weights, RA_tk, interval_size);
-            case 'find_best_alpha'
-                subset = MUWP_find_best_alpha(RA_weights, RA_tk, interval_size);
-            case 'relaxtime'
-                subset = MUWP_relaxtime(RA_weights, RA_tk, interval_size);
-            otherwise
-                fprintf('Invalid MUWP value "%s". Exiting function\n', MUWP);
-                return
-        end
+        subset = MUWP_garg(RA_weights, RA_tk, interval_size);
         scheduled_indices = indices(subset == 1);
         
         if ~isempty(scheduled_indices)
