@@ -37,11 +37,33 @@ while ~isempty(p_times)
         RA_weights = weights(indices);
         
         %Choose jobs to schedule in this interval
-        subset = MUWP_garg(RA_weights, RA_tk, interval_size);
+        switch MUWP
+            case 'garg'
+                subset = MUWP_garg(RA_weights, RA_tk, interval_size);
+            case 'mast'
+                subset = MUWP_mast(RA_weights, RA_tk, interval_size);
+            case 'find_best_alpha'
+                subset = MUWP_find_best_alpha(RA_weights, RA_tk, interval_size);
+            case 'relaxtime'
+                subset = MUWP_relaxtime(RA_weights, RA_tk, interval_size);
+            otherwise
+                disp('Invalid MUWP value. Exiting function')
+                return
+        end
         scheduled_indices = indices(subset);
         
         %Define the order in which to schedule jobs in the interval
-        permutation = order_mast(p_times(:, scheduled_indices), weights(scheduled_indices));
+        switch order
+            case 'mast'  
+                permutation = order_mast(p_times(:, scheduled_indices), weights(scheduled_indices));
+            case 'ratio'
+                permutation = order_ratio(p_times(:, scheduled_indices), weights(scheduled_indices));
+            case 'times'
+                permutation = order_times(p_times(:, scheduled_indices), weights(scheduled_indices));
+            case 'weight'
+                permutation = order_weight(p_times(:, scheduled_indices), weights(scheduled_indices));
+            otherwise
+        end
         permutation = scheduled_indices(permutation);
         
         %Compute the weighted sum of completion times
