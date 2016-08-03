@@ -1,4 +1,4 @@
-function [p_times, weights, release_times] = instance_dense(num_jobs, num_machines, max_rt, max_p_time, max_weight)
+function [p_times, weights, release_times] = instance_dense(N, M, max_r, max_p, max_w)
 % A function to generate a sparse random instance of concurrent open
 % shop; each job has zero processing time on X number of machines,
 % where X is random uniform on [floor(M / 3), M - 1].
@@ -18,10 +18,10 @@ function [p_times, weights, release_times] = instance_dense(num_jobs, num_machin
 
 %Generate weights, release times and processing times uniformly on the
 %interval. Weights are always non-zero.
-weights = randi(max_weight, num_jobs, 1);
+weights = randi(max_w, N, 1);
 
 %Without loss of generality, sort release times in non-decreasing order
-release_times = sort(randi(max_rt + 1, num_jobs, 1) - 1); 
-p_times = randi(max_p_time + 1, num_machines, num_jobs) - 1;
+release_times = sort(randi(max_r + 1, N, 1) - 1); 
+p_times = randi(max_p + 1, M, N) - 1;
 
 end
