@@ -1,0 +1,85 @@
+function generate_raw()
+% A function that solves a set number of instances of online 
+% concurrent open shop using all combinations of 
+% algorithms in this repository.
+
+
+num_instances = 100;
+num_algorithms = 34;
+N = 100;        % Number of jobs
+M = 30;         % Number of machines
+max_r = 500;    % Maximum release time
+max_p = 500;    % Maximum processing time
+max_w = 60;     % Maximum weight
+
+weighted_sums = zeros(num_algorithms, num_instances);
+completion_times = zeros(num_jobs, num_algorithms, num_instances);
+
+% Sparse instances   ------------
+load psparse.mat;
+for j = 1:num_instances
+   [weighted_sums(:, j), completion_times(:, :, j)] = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms, num_jobs);
+end
+save psparse_raw.mat weighted_sums completion_times;
+clear p_times weights release_times;
+
+load rsparse.mat;
+for j = 1:num_instances
+   [weighted_sums(:, j), completion_times(:, :, j)] = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms, num_jobs);
+end
+save rsparse_raw.mat weighted_sums completion_times;
+clear p_times weights release_times;
+
+% Dense instances    ------------
+load pdense.mat;
+for j = 1:num_instances
+   [weighted_sums(:, j), completion_times(:, :, j)] = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms, num_jobs);
+end
+save pdense_raw.mat weighted_sums completion_times;
+clear p_times weights release_times;
+
+load rdense.mat;
+for j = 1:num_instances
+   [weighted_sums(:, j), completion_times(:, :, j)] = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms, num_jobs);
+end
+save rdense_raw.mat weighted_sums completion_times;
+clear p_times weights release_times;
+
+% Uniform instanaces ------------
+load puniform.mat;
+for j = 1:num_instances
+   [weighted_sums(:, j), completion_times(:, :, j)] = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms, num_jobs);
+end
+save puniform_raw.mat weighted_sums completion_times;
+clear p_times weights release_times;
+
+load runiform.mat;
+for j = 1:num_instances
+   [weighted_sums(:, j), completion_times(:, :, j)] = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms, num_jobs);
+end
+save runiform_raw.mat weighted_sums completion_times;
+clear p_times weights release_times;
+
+end
+
+function [weighted_sums, completion_times] = single_instance(p_times, weights, release_times, num_algorithms, num_jobs)
+weighted_sums = zeros(num_algorithms, 1);
+completion_times = zeros(num_jobs, num_algorithms, 1);
+a = 1;
+
+MUWPS = char('find_best_alpha', 'garg', 'mast', 'relaxtime');
+orders = char('mast', 'ratio', 'times', 'weight');
+
+
+for MUWP = MUWPS.'
+    for order = orders.'
+           [weighted_sums(a), completion_times(:, a)] = online_10(p_times, weights, release_times, MUWP.', order.');
+           a = a + 1;
+           [weighted_sums(a), completion_times(:, a)] = online_10_boost(p_times, weights, release_times, MUWP.', order.');
+           a = a + 1;
+    end
+end
+[weighted_sums(a), completion_times(:, a)] = online_greedy(p_times, weights, release_times);
+a = a + 1;
+[weighted_sums(a), completion_times(:, a)] = online_16(p_times, weights, release_times, 'garg');
+end
