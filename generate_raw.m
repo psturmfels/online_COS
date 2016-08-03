@@ -7,10 +7,6 @@ function generate_raw()
 num_instances = 1;
 num_algorithms = 34;
 N = 10;        % Number of jobs
-M = 3;         % Number of machines
-max_r = 500;    % Maximum release time
-max_p = 500;    % Maximum processing time
-max_w = 60;     % Maximum weight
 
 weighted_sums = zeros(num_algorithms, num_instances);
 completion_times = zeros(N, num_algorithms, num_instances);
