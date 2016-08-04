@@ -5,7 +5,7 @@ function generate_raw()
 
 
 num_instances = 1;
-num_algorithms = 34;
+num_algorithms = 26;
 N = 10;        % Number of jobs
 
 weighted_sums = zeros(num_algorithms, num_instances);
@@ -99,13 +99,13 @@ weighted_sums = zeros(num_algorithms, 1);
 [weighted_sums(18), ~] = online_10_boost(p_times, weights, release_times, 'mast', 'ratio');
 [weighted_sums(19), ~] = online_10_boost(p_times, weights, release_times, 'mast', 'times');
 [weighted_sums(20), ~] = online_10_boost(p_times, weights, release_times, 'mast', 'weight');
-[weighted_sums(17), ~] = online_10_boost(p_times, weights, release_times, 'relaxtime', 'mast');
-[weighted_sums(18), ~] = online_10_boost(p_times, weights, release_times, 'relaxtime', 'ratio');
-[weighted_sums(19), ~] = online_10_boost(p_times, weights, release_times, 'relaxtime', 'times');
-[weighted_sums(20), ~] = online_10_boost(p_times, weights, release_times, 'relaxtime', 'weight');
+[weighted_sums(21), ~] = online_10_boost(p_times, weights, release_times, 'relaxtime', 'mast');
+[weighted_sums(22), ~] = online_10_boost(p_times, weights, release_times, 'relaxtime', 'ratio');
+[weighted_sums(23), ~] = online_10_boost(p_times, weights, release_times, 'relaxtime', 'times');
+[weighted_sums(24), ~] = online_10_boost(p_times, weights, release_times, 'relaxtime', 'weight');
 
-[weighted_sums(21), ~] = online_greedy(p_times, weights, release_times);
-[weighted_sums(22), ~] = online_16(p_times, weights, release_times);
+[weighted_sums(25), ~] = online_greedy(p_times, weights, release_times);
+[weighted_sums(26), ~] = online_16(p_times, weights, release_times);
 
 %weighted_sums = weighted_sums / weighted_sums(lemgth(weighted_sums));
 

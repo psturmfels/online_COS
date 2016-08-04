@@ -18,16 +18,16 @@ while ~isempty(p_times)
     tk = 2^k - 1;
     tk_plus1 = 2^(k + 1) - 1;
     
-    %The indices of the above jobs in p_times
-    indices = 1:length(weights);
-    
     %Filter out jobs not yet released
-    for i = 1:length(weights)
-        if release_times(i) > tk
-            indices(i) = -1;
+    indices = find(release_times <= tk);
+    for i = 1:length(indices)
+        max_l = max(p_times(:, indices(i)));
+        if max_l > interval_size
+           indices(i) = -1; 
         end
     end
-    indices = indices(indices ~= -1);
+    indices(indices == -1) = [];
+    
     if ~isempty(indices)
         %The set of jobs to consider in this interval
         RA_tk = p_times(:, indices);

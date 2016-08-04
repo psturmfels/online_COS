@@ -20,6 +20,13 @@ while ~isempty(p_times)
     
     %Filter out jobs not yet released
     indices = find(release_times <= tk);
+    for i = 1:length(indices)
+        max_l = max(p_times(:, indices(i)));
+        if max_l > interval_size
+           indices(i) = -1; 
+        end
+    end
+    indices(indices == -1) = [];
     
     if ~isempty(indices)
         %The set of jobs to consider in this interval

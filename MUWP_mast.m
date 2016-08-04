@@ -1,6 +1,6 @@
 function [subset] = MUWP_mast(RA_weights, RA_tk, interval_size)
 % Solves the Minimum Unscheduled Weight Problem for
-% concurrent open shop by using a combinatorial algorithm
+% concurrent open shop using a combinatorial algorithm
 weights = RA_weights;
 p_times = RA_tk;
 
@@ -8,6 +8,7 @@ num_jobs = length(weights);
 permutation = 1:num_jobs;
 indices = 1:num_jobs;
 L = sum(p_times, 2);
+subset = zeros(num_jobs, 1);
 
 for k = linspace(num_jobs, 1, num_jobs)
     %Determine machine of max load
@@ -33,9 +34,14 @@ for k = linspace(num_jobs, 1, num_jobs)
     indices(sigma) = [];
 end
 
-for break_index = 1:(num_jobs - 1)
-   max_load = max(sum(RA_tk(:, permutation(1:(break_index + 1))), 2));
+L = zeros(size(p_times, 1), 1);
+for break_index = 1:(num_jobs)
+   L = L + RA_tk(:, permutation(break_index));
+   max_load = max(L);
    if max_load > interval_size
+      if break_index > 1;
+         break_index = break_index - 1; 
+      end
       break;
    end
 end
@@ -43,8 +49,8 @@ end
 if break_index < num_jobs
     [~, add_index] = max(RA_weights(permutation((break_index + 1):num_jobs)));
     add_index = add_index(1) + break_index;
-    subset = [permutation(1:break_index), permutation(add_index)];
+    subset([permutation(1:break_index), permutation(add_index)]) = 1;
 else
-    subset = [permutation];
+    subset = ones(num_jobs, 1);
 end
 end
