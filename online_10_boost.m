@@ -16,21 +16,13 @@ ctindex = 1:length(weights);
 
 while ~isempty(p_times)
     %Define the interval
-    tk = max(tk_plus1, max(release_times));
+    tk = max(tk_plus1, min(release_times));
     interval_size = 2^k;
     tk_plus1 = tk + interval_size;
     
-    %The indices of the above jobs in p_times
-    indices = 1:length(weights);
-    
     %Filter out jobs not yet released
-    for i = 1:length(weights)
-        if release_times(i) > tk
-            indices(i) = -1;
-        end
-    end
+    indices = find(release_times <= tk);
     
-    indices = indices(indices ~= -1);
     if ~isempty(indices)
         %The set of jobs to consider in this interval
         RA_tk = p_times(:, indices);
