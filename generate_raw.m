@@ -107,6 +107,6 @@ weighted_sums = zeros(num_algorithms, 1);
 [weighted_sums(25), ~] = online_greedy(p_times, weights, release_times);
 [weighted_sums(26), ~] = online_16(p_times, weights, release_times);
 
-%weighted_sums = weighted_sums / weighted_sums(lemgth(weighted_sums));
+weighted_sums = weighted_sums / weighted_sums(lemgth(weighted_sums));
 
 end
