@@ -11,52 +11,35 @@ release time rj. No part of job j can be processed before its release time.
 The variant considered here is the online version of concurrent open shop: as opposed to knowing each job in advance, 
 jobs arrive over time, and the details of each job become known once they arrive.
 
-The problem is described in [Order Scheduling Models: Hardness and Algorithms](http://www.cse.iitd.ernet.in/~pandit/sched.pdf).
-The 4-approximation and the 16-approximation (in online_4apr.m and online_16apr.m respectively) come from section 5 of the above paper.
-All other algorithms that appear here are heuristics meant to be tested against algorithms with theoretically-proven performance
-guarantees.
+The problem is described in [Order Scheduling Models: Hardness and Algorithms](http://www.cse.iitd.ernet.in/~pandit/sched.pdf). 
+The above paper provides an exponential 4-approximation and a polynomial 16-approximation to this problem in section 5.
+My lab group and I showed an exponential 3-approximation and a polynomial 10-approximation to the same problem, with a manuscript in-progress. 
+
+All of the online algorithms for this problem rely on a key idea: split time into geometrically increasing intervals. At the beginning of each interval, select from the set of available jobs the subset with the most weight, and schedule that subset in the next interval.
+The purpose of this repository is to test different heuristics for the two phases of this algorithm: the _subset_ phase, which chooses the subset, and the _scheduling_ phase, which schedules each subset within an interval. 
 
 ### How to use this repo
 
 #### Generating an instance of the problem
-The two functions below are provided above and meant to be called as such. Both of them generate instances 
-of the online (or offline with release times) concurrent open shop problem. uniform_COS_instance does so uniformly at random,
-while targeted_COS_instance generates weights and processing times in a slightly more structured way.
+The function ``generate_instances`` generates a fixed number of instances of concurrent open shop, with the following paramters:
+- num_instances: number of instances
+- N: Number of jobs
+- M: Number of machines
+- max_r: Maximum release time of any job
+- max_p: Maximum processing time of any job on any machine
+- max_w: Maximum weight of any job
 
-```
-[p_times, weights, release_times] = uniform_COS_instance(num_jobs, num_machines, max_rt, max_p_time, max_weight)
-[p_times, weights, release_times] = targeted_COS_instance(num_jobs, num_machines, max_rt, max_p_time, max_weight)
-```
+The function generates three groups of instances, each with two conditions. The two conditions are as follows:
+Condition p: P = max_p, R = floor(max_r / 5)
+Condition r: P = floor(max_p / 5), R = max_r
 
-Inputs: 
-- num_jobs: Number of jobs
-- num_machines: Number of machines
-- max_rt: Maximum release time of any job
-- max_p_time: Maximum processing time of any job
-- max_weight: Maximum weight of any job
- 
-Outputs:
-- p_times: A num_machines x num_jobs matrix. Each column represents a job, each row represents a machine.
-- weights: A vector of length num_jobs, representing the weight of each job.
-- release_times: A vector of length num_jobs, representing the release time of each job
-
+For all groups, all jobs have release times uniform random on [1, R]. The three groups are as follows:
+- sparse: Each job has zero processing time X machines, where X is uniform random on [floor(M / 3), M - 1]. For job j, the machines with zero processing times are sampled uniformly at random from the M machines. For job j, the remaining machines have Y processing time, where Y is uniform random on [1, P]. 
+- dense: Each job has processing time on each machine uniform random on [0, P].
+- uniform: Each job has zero processing time X machines, where X is uniform random on [1, floor(M / 3)]. For job j, the machines with zero processing times are sampled uniformly at random from the M machines. For job j, the remaining machines have Y processing time, where Y is uniform random on [1, P]. 
 
 #### Solving instances of the problem
-The functions below are designed to solve instances of the problem generated from the functions in the above section.
-online_16apr and online_4apr are based on the scheduling paper mentioned above.
-
-```
-function [weighted_sum, completion_times] = online_16apr(p_times, weights, release_times)
-function [weighted_sum, completion_times] = online_4apr(p_times, weights, release_times)
-```
-
-Inputs: See outputs of previous section
-Outputs: 
-- weighted_sum: The value of the objective function, sum of weighted completion times
-- completion_times: A vector of length num_jobs, representing the completion time of each job in the schedule
+In progress. 
 
 #### Comparing Algorithms
-The main point of this repo is not to run algorithms individually, but to compare their results. 
-```compare_online(num_jobs, num_machines, max_rt, max_p_time, max_weight)``` is a first stab at 
-comparing online_16apr and online_4apr. It generates and solves 1000 instances using both methods. It then
-plots the objective funtion's value of online_16apr on the y-axis, and that of online_4apr on the x-axis.
+In progress.
