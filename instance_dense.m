@@ -1,7 +1,7 @@
 function [p_times, weights, release_times] = instance_dense(N, M, max_r, max_p, max_w)
-% A function to generate a sparse random instance of concurrent open
-% shop; each job has zero processing time on X number of machines,
-% where X is random uniform on [floor(M / 3), M - 1].
+% A function to generate a dense random instance of concurrent open
+% shop; each job has uniform processing time on all machines, on [0,
+% max_p].
 %
 % inputs:
 %   N = number of jobs
