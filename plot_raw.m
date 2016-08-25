@@ -9,7 +9,7 @@ set(gca, 'XTickLabelRotation', 60);
 title('Sparse, max_p > max_r');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 3]);
+axis([0 27 0 2]);
 
 load rsparse_raw.mat
 rsparse = weighted_sums; 
@@ -21,7 +21,7 @@ set(gca, 'XTickLabelRotation', 60);
 title('Sparse, max_p < max_r');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 3]);
+axis([0 27 0 2]);
 
 load pdense_raw.mat
 pdense = weighted_sums; 
@@ -33,7 +33,7 @@ set(gca, 'XTickLabelRotation', 60);
 title('Dense, max_p > max_r');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 3]);
+axis([0 27 0 2]);
 
 load rdense_raw.mat
 rdense = weighted_sums; 
@@ -45,7 +45,7 @@ set(gca, 'XTickLabelRotation', 60);
 title('Dense, max_p < max_r');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 3]);
+axis([0 27 0 2]);
 
 load puniform_raw.mat
 puniform = weighted_sums; 
@@ -57,7 +57,7 @@ set(gca, 'XTickLabelRotation', 60);
 title('Uniform, max_p > max_r');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 3]);
+axis([0 27 0 2]);
 
 load runiform_raw.mat
 runiform = weighted_sums; 
@@ -69,7 +69,28 @@ set(gca, 'XTickLabelRotation', 60);
 title('Uniform, max_p < max_r');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 3]);
+axis([0 27 0 2]);
+
+load facebook_raw.mat
+figure;
+bar(weighted_sum_same);
+set(gca, 'XTick', 1:26);
+set(gca, 'XTickLabel', {'10gargmast', '10gargratio', '10gargtimes', '10gargweight', '10mastmast', '10mastratio', '10masttimes', '10mastweight', 'boostfindbestalphamast', 'boostfindbestalpharatio', 'boostfindbestalphatimes', 'boostfindbestalphaweight', 'boostgargmast', 'boostgargratio', 'boostgargtimes', 'boostgargweight', 'boostmastmast', 'boostmastratio', 'boostmasttimes', 'boostmastweight', 'boostrelaxtimemast', 'boostrelaxtimeratio', 'boostrelaxtimetimes', 'boostrelaxtimeweight', 'greedy', 'online16'})
+set(gca, 'XTickLabelRotation', 60);
+title('Facebook Trace, identical weights');
+xlabel('Algorithm Type');
+ylabel('Normalized Sum of Weighted Completion Times');
+axis([0 27 0 2]);
+
+figure;
+bar(weighted_sum_unif);
+set(gca, 'XTick', 1:26);
+set(gca, 'XTickLabel', {'10gargmast', '10gargratio', '10gargtimes', '10gargweight', '10mastmast', '10mastratio', '10masttimes', '10mastweight', 'boostfindbestalphamast', 'boostfindbestalpharatio', 'boostfindbestalphatimes', 'boostfindbestalphaweight', 'boostgargmast', 'boostgargratio', 'boostgargtimes', 'boostgargweight', 'boostmastmast', 'boostmastratio', 'boostmasttimes', 'boostmastweight', 'boostrelaxtimemast', 'boostrelaxtimeratio', 'boostrelaxtimetimes', 'boostrelaxtimeweight', 'greedy', 'online16'})
+set(gca, 'XTickLabelRotation', 60);
+title('Facebook Trace, uniform weights');
+xlabel('Algorithm Type');
+ylabel('Normalized Sum of Weighted Completion Times');
+axis([0 27 0 2]);
 
 %bar3([psparse, rsparse, pdense, rdense, puniform, runiform])
 %set(gca, 'YTick', 1:6);

@@ -17,7 +17,6 @@ while ~isempty(p_times)
     tk = 2^k - 1;
     tk_plus1 = 2^(k + 1) - 1;
     
-    
     %Filter out jobs not yet released
     indices = find(release_times <= tk);
     for i = 1:length(indices)
@@ -32,6 +31,7 @@ while ~isempty(p_times)
         %The set of jobs to consider in this interval
         RA_tk = p_times(:, indices);
         RA_weights = weights(indices);
+        %fprintf('indices: %f\n', length(indices));
         
         %Choose jobs to schedule in this interval
         subset = -1;
@@ -48,7 +48,10 @@ while ~isempty(p_times)
                 fprintf('Invalid MUWP value "%s". Exiting function\n', MUWP);
                 return
         end
+        %fprintf('k = %f\n', k);
         scheduled_indices = indices(subset == 1);
+        %fprintf('subset: %f\n',length(scheduled_indices));
+
         
         if ~isempty(scheduled_indices)
             %Define the order in which to schedule jobs in the interval

@@ -8,7 +8,7 @@ function [x_bar] = MUWP_LP(weights, p_times, max_processing_time)
 % where completion_times and weights are vectors of length N,
 % and p_times is an MxN matrix.
 
-options = optimset('Display','none');
+options = optimoptions('linprog','Algorithm','dual-simplex', 'Display','none');
 lb = zeros(length(weights), 1);
 ub = lb + 1;
 Aeq = [];
