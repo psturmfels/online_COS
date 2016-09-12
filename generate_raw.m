@@ -4,9 +4,9 @@ function generate_raw()
 % algorithms in this repository.
 
 
-num_instances = 100;
-num_algorithms = 26;
-N = 100;        % Number of jobs
+num_instances = 50;
+num_algorithms = 3;
+N = 500;        % Number of jobs
 
 weighted_sums = zeros(num_algorithms, num_instances);
 
