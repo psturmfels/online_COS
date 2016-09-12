@@ -19,26 +19,26 @@ release_times = zeros(N, num_instances);
 for i = 1:num_instances
     [p_times(:, :, i), weights(:, i), release_times(:,i)] = instance_sparse(N, M, max_r / 5, max_p, 1);
 end
-save p_i_sparse.mat p_times weights release_times;
+save p_i_sparse_raw.mat p_times weights release_times;
 
 % random weights
 for i = 1:num_instances
     [p_times(:, :, i), weights(:, i), release_times(:,i)] = instance_sparse(N, M, max_r / 5, max_p, max_w);
 end
-save p_r_sparse.mat p_times weights release_times;
+save p_r_sparse_raw.mat p_times weights release_times;
 
 %%% max_r >> max_p
 % identical weights
 for i = 1:num_instances
     [p_times(:, :, i), weights(:, i), release_times(:,i)] = instance_sparse(N, M, max_r, max_p / 5, 1);
 end
-save r_i_sparse.mat p_times weights release_times;
+save r_i_sparse_raw.mat p_times weights release_times;
 
 % random weights
 for i = 1:num_instances
     [p_times(:, :, i), weights(:, i), release_times(:,i)] = instance_sparse(N, M, max_r, max_p / 5, max_w);
 end
-save r_r_sparse.mat p_times weights release_times
+save r_r_sparse_raw.mat p_times weights release_times
 
 %%%% Dense instances
 %%% max_p >> max_r
@@ -46,26 +46,26 @@ save r_r_sparse.mat p_times weights release_times
 for i = 1:num_instances
     [p_times(:, :, i), weights(:, i), release_times(:,i)] = instance_dense(N, M, max_r / 5, max_p, 1);
 end
-save p_i_dense.mat p_times weights release_times;
+save p_i_dense_raw.mat p_times weights release_times;
  
 % random weights
 for i = 1:num_instances
     [p_times(:, :, i), weights(:, i), release_times(:,i)] = instance_dense(N, M, max_r / 5, max_p, max_w);
 end
-save p_r_dense.mat p_times weights release_times;
+save p_r_dense_raw.mat p_times weights release_times;
  
 %%% max_r >> max_p
 % identical weights
 for i = 1:num_instances
     [p_times(:, :, i), weights(:, i), release_times(:,i)] = instance_dense(N, M, max_r, max_p / 5, 1);
 end
-save r_i_dense.mat p_times weights release_times;
+save r_i_dense_raw.mat p_times weights release_times;
  
 % random weights
 for i = 1:num_instances
     [p_times(:, :, i), weights(:, i), release_times(:,i)] = instance_dense(N, M, max_r, max_p / 5, max_w);
 end
-save r_r_dense.mat p_times weights release_times
+save r_r_dense_raw.mat p_times weights release_times
 
 %%%% uniform instances
 %%% max_p >> max_r
@@ -73,25 +73,25 @@ save r_r_dense.mat p_times weights release_times
 for i = 1:num_instances
     [p_times(:, :, i), weights(:, i), release_times(:,i)] = instance_uniform(N, M, max_r / 5, max_p, 1);
 end
-save p_i_uniform.mat p_times weights release_times;
+save p_i_uniform_raw.mat p_times weights release_times;
  
 % random weights
 for i = 1:num_instances
     [p_times(:, :, i), weights(:, i), release_times(:,i)] = instance_uniform(N, M, max_r / 5, max_p, max_w);
 end
-save p_r_uniform.mat p_times weights release_times;
+save p_r_uniform_raw.mat p_times weights release_times;
  
 %%% max_r >> max_p
 % identical weights
 for i = 1:num_instances
     [p_times(:, :, i), weights(:, i), release_times(:,i)] = instance_uniform(N, M, max_r, max_p / 5, 1);
 end
-save r_i_uniform.mat p_times weights release_times;
+save r_i_uniform_raw.mat p_times weights release_times;
  
 % random weights
 for i = 1:num_instances
     [p_times(:, :, i), weights(:, i), release_times(:,i)] = instance_uniform(N, M, max_r, max_p / 5, max_w);
 end
-save r_r_uniform.mat p_times weights release_times
+save r_r_uniform_raw.mat p_times weights release_times
 
 end

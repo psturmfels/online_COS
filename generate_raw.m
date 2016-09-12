@@ -10,67 +10,145 @@ N = 500;        % Number of jobs
 
 weighted_sums = zeros(num_algorithms, num_instances);
 
-% Sparse instances   ------------
-load psparse.mat;
-fprintf('\npsparse instances: ');
+%%%% Sparse instances   ------------
+%%% max_p >> max_r
+% identical weights
+load p_i_sparse_raw.mat;
+fprintf('\np_i_sparse instances: ');
 for j = 1:num_instances
    fprintf('%d ', j);
    weighted_sums(:, j) = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms);
 end
 weighted_sums = mean(weighted_sums, 2);
-save psparse_raw.mat weighted_sums;
+save p_i_sparse.mat weighted_sums;
 clear p_times weights release_times;
 
-load rsparse.mat;
-fprintf('\nrsparse instances: ');
+% random weights
+load p_r_sparse_raw.mat;
+fprintf('\np_r_sparse instances: ');
 for j = 1:num_instances
-    fprintf('%d ', j);
+   fprintf('%d ', j);
    weighted_sums(:, j) = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms);
 end
 weighted_sums = mean(weighted_sums, 2);
-save rsparse_raw.mat weighted_sums;
+save p_r_sparse.mat weighted_sums;
 clear p_times weights release_times;
 
-% Dense instances    ------------
-load pdense.mat;
-fprintf('\npdense instances: ');
+%%% max_r >> max_r
+% identical weights
+load r_i_sparse_raw.mat;
+fprintf('\nr_i_sparse instances: ');
 for j = 1:num_instances
-    fprintf('%d ', j);
+   fprintf('%d ', j);
    weighted_sums(:, j) = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms);
 end
 weighted_sums = mean(weighted_sums, 2);
-save pdense_raw.mat weighted_sums;
+save r_i_sparse.mat weighted_sums;
 clear p_times weights release_times;
 
-load rdense.mat;
-fprintf('\nrdense instances: ');
+% random weights
+load r_r_sparse_raw.mat;
+fprintf('\nr_r_sparse instances: ');
 for j = 1:num_instances
-    fprintf('%d ', j);
+   fprintf('%d ', j);
    weighted_sums(:, j) = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms);
 end
 weighted_sums = mean(weighted_sums, 2);
-save rdense_raw.mat weighted_sums;
+save r_r_sparse.mat weighted_sums;
 clear p_times weights release_times;
 
-% Uniform instanaces ------------
-load puniform.mat;
-fprintf('\npuniform instances: ');
+%%%% Dense instances   ------------
+%%% max_p >> max_r
+% identical weights
+load p_i_dense_raw.mat;
+fprintf('\np_i_dense instances: ');
 for j = 1:num_instances
-    fprintf('%d ', j);
+   fprintf('%d ', j);
    weighted_sums(:, j) = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms);
 end
 weighted_sums = mean(weighted_sums, 2);
-save puniform_raw.mat weighted_sums;
+save p_i_dense.mat weighted_sums;
 clear p_times weights release_times;
-
-load runiform.mat;
-fprintf('\nruniform instances: ');
+ 
+% random weights
+load p_r_dense_raw.mat;
+fprintf('\np_r_dense instances: ');
 for j = 1:num_instances
-    fprintf('%d ', j);
+   fprintf('%d ', j);
    weighted_sums(:, j) = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms);
 end
 weighted_sums = mean(weighted_sums, 2);
-save runiform_raw.mat weighted_sums;
+save p_r_dense.mat weighted_sums;
+clear p_times weights release_times;
+ 
+%%% max_r >> max_r
+% identical weights
+load r_i_dense_raw.mat;
+fprintf('\nr_i_dense instances: ');
+for j = 1:num_instances
+   fprintf('%d ', j);
+   weighted_sums(:, j) = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms);
+end
+weighted_sums = mean(weighted_sums, 2);
+save r_i_dense.mat weighted_sums;
+clear p_times weights release_times;
+ 
+% random weights
+load r_r_dense_raw.mat;
+fprintf('\nr_r_dense instances: ');
+for j = 1:num_instances
+   fprintf('%d ', j);
+   weighted_sums(:, j) = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms);
+end
+weighted_sums = mean(weighted_sums, 2);
+save r_r_dense.mat weighted_sums;
+clear p_times weights release_times;
+
+%%%% Uniform instances   ------------
+%%% max_p >> max_r
+% identical weights
+load p_i_uniform_raw.mat;
+fprintf('\np_i_uniform instances: ');
+for j = 1:num_instances
+   fprintf('%d ', j);
+   weighted_sums(:, j) = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms);
+end
+weighted_sums = mean(weighted_sums, 2);
+save p_i_uniform.mat weighted_sums;
+clear p_times weights release_times;
+ 
+% random weights
+load p_r_uniform_raw.mat;
+fprintf('\np_r_uniform instances: ');
+for j = 1:num_instances
+   fprintf('%d ', j);
+   weighted_sums(:, j) = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms);
+end
+weighted_sums = mean(weighted_sums, 2);
+save p_r_uniform.mat weighted_sums;
+clear p_times weights release_times;
+ 
+%%% max_r >> max_r
+% identical weights
+load r_i_uniform_raw.mat;
+fprintf('\nr_i_uniform instances: ');
+for j = 1:num_instances
+   fprintf('%d ', j);
+   weighted_sums(:, j) = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms);
+end
+weighted_sums = mean(weighted_sums, 2);
+save r_i_uniform.mat weighted_sums;
+clear p_times weights release_times;
+ 
+% random weights
+load r_r_uniform_raw.mat;
+fprintf('\nr_r_uniform instances: ');
+for j = 1:num_instances
+   fprintf('%d ', j);
+   weighted_sums(:, j) = single_instance(p_times(:,:,j), weights(:, j), release_times(:, j), num_algorithms);
+end
+weighted_sums = mean(weighted_sums, 2);
+save r_r_uniform.mat weighted_sums;
 clear p_times weights release_times;
 
 end
