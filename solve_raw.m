@@ -1,4 +1,4 @@
-function generate_raw()
+function solve_raw()
 % A function that solves a set number of instances of online 
 % concurrent open shop using all combinations of 
 % algorithms in this repository.

@@ -1,111 +1,200 @@
 function plot_raw()
 
-load psparse_raw.mat
+num_algorithms = 3;
+
+%%%% Sparse instances
+%%% max_p >> max_r
+% identical weights
+load p_i_sparse.mat
 psparse = weighted_sums; 
 figure(1);
 bar(psparse, 'b');
-set(gca, 'XTick', 1:26);
-set(gca, 'XTickLabel', {'10gargmast', '10gargratio', '10gargtimes', '10gargweight', '10mastmast', '10mastratio', '10masttimes', '10mastweight', 'boostfindbestalphamast', 'boostfindbestalpharatio', 'boostfindbestalphatimes', 'boostfindbestalphaweight', 'boostgargmast', 'boostgargratio', 'boostgargtimes', 'boostgargweight', 'boostmastmast', 'boostmastratio', 'boostmasttimes', 'boostmastweight', 'boostrelaxtimemast', 'boostrelaxtimeratio', 'boostrelaxtimetimes', 'boostrelaxtimeweight', 'greedy', 'online16'})
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
 set(gca, 'XTickLabelRotation', 60);
-title('Sparse, max_p > max_r');
+title('Sparse, max_p > max_r, identical weights');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 2]);
-saveas(1, 'Sparse_max_p_>_max_r', 'png');
+axis([0 num_algorithms 0 2]);
+saveas(1, 'p_i_sparse', 'png');
 
-load rsparse_raw.mat
-rsparse = weighted_sums; 
-figure(2);
-bar(rsparse, 'c');
-set(gca, 'XTick', 1:26);
-set(gca, 'XTickLabel', {'10gargmast', '10gargratio', '10gargtimes', '10gargweight', '10mastmast', '10mastratio', '10masttimes', '10mastweight', 'boostfindbestalphamast', 'boostfindbestalpharatio', 'boostfindbestalphatimes', 'boostfindbestalphaweight', 'boostgargmast', 'boostgargratio', 'boostgargtimes', 'boostgargweight', 'boostmastmast', 'boostmastratio', 'boostmasttimes', 'boostmastweight', 'boostrelaxtimemast', 'boostrelaxtimeratio', 'boostrelaxtimetimes', 'boostrelaxtimeweight', 'greedy', 'online16'})
+% random weights
+load p_r_sparse.mat
+psparse = weighted_sums; 
+figure(1);
+bar(psparse, 'b');
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
 set(gca, 'XTickLabelRotation', 60);
-title('Sparse, max_p < max_r');
+title('Sparse, max_p > max_r, random weights');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 2]);
-saveas(2, 'Sparse_max_p_<_max_r', 'png');
+axis([0 num_algorithms 0 2]);
+saveas(1, 'p_r_sparse', 'png');
 
-
-load pdense_raw.mat
-pdense = weighted_sums; 
-figure(3);
-bar(pdense, 'r');
-set(gca, 'XTick', 1:26);
-set(gca, 'XTickLabel', {'10gargmast', '10gargratio', '10gargtimes', '10gargweight', '10mastmast', '10mastratio', '10masttimes', '10mastweight', 'boostfindbestalphamast', 'boostfindbestalpharatio', 'boostfindbestalphatimes', 'boostfindbestalphaweight', 'boostgargmast', 'boostgargratio', 'boostgargtimes', 'boostgargweight', 'boostmastmast', 'boostmastratio', 'boostmasttimes', 'boostmastweight', 'boostrelaxtimemast', 'boostrelaxtimeratio', 'boostrelaxtimetimes', 'boostrelaxtimeweight', 'greedy', 'online16'})
+%%% max_r >> max_p
+% identical weights
+load r_i_sparse.mat
+psparse = weighted_sums; 
+figure(1);
+bar(psparse, 'b');
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
 set(gca, 'XTickLabelRotation', 60);
-title('Dense, max_p > max_r');
+title('Sparse, max_r > max_p, identical weights');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 2]);
-saveas(3, 'Dense_max_p_max_>_r', 'png');
+axis([0 num_algorithms 0 2]);
+saveas(1, 'r_i_sparse', 'png');
 
-load rdense_raw.mat
-rdense = weighted_sums; 
-figure(4);
-bar(rdense, 'm');
-set(gca, 'XTick', 1:26);
-set(gca, 'XTickLabel', {'10gargmast', '10gargratio', '10gargtimes', '10gargweight', '10mastmast', '10mastratio', '10masttimes', '10mastweight', 'boostfindbestalphamast', 'boostfindbestalpharatio', 'boostfindbestalphatimes', 'boostfindbestalphaweight', 'boostgargmast', 'boostgargratio', 'boostgargtimes', 'boostgargweight', 'boostmastmast', 'boostmastratio', 'boostmasttimes', 'boostmastweight', 'boostrelaxtimemast', 'boostrelaxtimeratio', 'boostrelaxtimetimes', 'boostrelaxtimeweight', 'greedy', 'online16'})
+% random weights
+load r_r_sparse.mat
+psparse = weighted_sums; 
+figure(1);
+bar(psparse, 'b');
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
 set(gca, 'XTickLabelRotation', 60);
-title('Dense, max_p < max_r');
+title('Sparse, max_r > max_p, random weights');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 2]);
-saveas(4, 'Dense_max_p_<_max__r', 'png');
+axis([0 num_algorithms 0 2]);
+saveas(1, 'r_r_sparse', 'png');
 
-load puniform_raw.mat
-puniform = weighted_sums; 
-figure(5);
-bar(puniform, 'k');
-set(gca, 'XTick', 1:26);
-set(gca, 'XTickLabel', {'10gargmast', '10gargratio', '10gargtimes', '10gargweight', '10mastmast', '10mastratio', '10masttimes', '10mastweight', 'boostfindbestalphamast', 'boostfindbestalpharatio', 'boostfindbestalphatimes', 'boostfindbestalphaweight', 'boostgargmast', 'boostgargratio', 'boostgargtimes', 'boostgargweight', 'boostmastmast', 'boostmastratio', 'boostmasttimes', 'boostmastweight', 'boostrelaxtimemast', 'boostrelaxtimeratio', 'boostrelaxtimetimes', 'boostrelaxtimeweight', 'greedy', 'online16'})
+%%%% Dense instances
+%%% max_p >> max_r
+% identical weights
+load p_i_dense.mat
+figure(1);
+bar(weighted_sums, 'b');
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
 set(gca, 'XTickLabelRotation', 60);
-title('Uniform, max_p > max_r');
+title('Dense, max_p > max_r, identical weights');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 2]);
-saveas(5, 'Uniform_max_p_>_max__r', 'png');
-
-load runiform_raw.mat
-runiform = weighted_sums; 
-figure(6);
-bar(runiform, 'w');
-set(gca, 'XTick', 1:26);
-set(gca, 'XTickLabel', {'10gargmast', '10gargratio', '10gargtimes', '10gargweight', '10mastmast', '10mastratio', '10masttimes', '10mastweight', 'boostfindbestalphamast', 'boostfindbestalpharatio', 'boostfindbestalphatimes', 'boostfindbestalphaweight', 'boostgargmast', 'boostgargratio', 'boostgargtimes', 'boostgargweight', 'boostmastmast', 'boostmastratio', 'boostmasttimes', 'boostmastweight', 'boostrelaxtimemast', 'boostrelaxtimeratio', 'boostrelaxtimetimes', 'boostrelaxtimeweight', 'greedy', 'online16'})
+axis([0 num_algorithms 0 2]);
+saveas(1, 'p_i_dense', 'png');
+ 
+% random weights
+load p_r_dense.mat
+figure(1);
+bar(weighted_sums, 'b');
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
 set(gca, 'XTickLabelRotation', 60);
-title('Uniform, max_p < max_r');
+title('Dense, max_p > max_r, random weights');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 2]);
-saveas(6, 'Uniform_max_p_<_max__r', 'png');
+axis([0 num_algorithms 0 2]);
+saveas(1, 'p_r_dense', 'png');
+ 
+%%% max_r >> max_p
+% identical weights
+load r_i_dense.mat
+figure(1);
+bar(weighted_sums, 'b');
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
+set(gca, 'XTickLabelRotation', 60);
+title('Dense, max_r > max_p, identical weights');
+xlabel('Algorithm Type');
+ylabel('Normalized Sum of Weighted Completion Times');
+axis([0 num_algorithms 0 2]);
+saveas(1, 'r_i_dense', 'png');
+ 
+% random weights
+load r_r_dense.mat
+figure(1);
+bar(weighted_sums, 'b');
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
+set(gca, 'XTickLabelRotation', 60);
+title('Dense, max_r > max_p, random weights');
+xlabel('Algorithm Type');
+ylabel('Normalized Sum of Weighted Completion Times');
+axis([0 num_algorithms 0 2]);
+saveas(1, 'r_r_dense', 'png');
 
+%%%% Uniform instances
+%%% max_p >> max_r
+% identical weights
+load p_i_uniform.mat
+figure(1);
+bar(weighted_sums, 'b');
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
+set(gca, 'XTickLabelRotation', 60);
+title('Uniform, max_p > max_r, identical weights');
+xlabel('Algorithm Type');
+ylabel('Normalized Sum of Weighted Completion Times');
+axis([0 num_algorithms 0 2]);
+saveas(1, 'p_i_uniform', 'png');
+ 
+% random weights
+load p_r_uniform.mat
+figure(1);
+bar(weighted_sums, 'b');
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
+set(gca, 'XTickLabelRotation', 60);
+title('Uniform, max_p > max_r, random weights');
+xlabel('Algorithm Type');
+ylabel('Normalized Sum of Weighted Completion Times');
+axis([0 num_algorithms 0 2]);
+saveas(1, 'p_r_uniform', 'png');
+ 
+%%% max_r >> max_p
+% identical weights
+load r_i_uniform.mat
+figure(1);
+bar(weighted_sums, 'b');
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
+set(gca, 'XTickLabelRotation', 60);
+title('Uniform, max_r > max_p, identical weights');
+xlabel('Algorithm Type');
+ylabel('Normalized Sum of Weighted Completion Times');
+axis([0 num_algorithms 0 2]);
+saveas(1, 'r_i_uniform', 'png');
+ 
+% random weights
+load r_r_uniform.mat
+figure(1);
+bar(weighted_sums, 'b');
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
+set(gca, 'XTickLabelRotation', 60);
+title('Uniform, max_r > max_p, random weights');
+xlabel('Algorithm Type');
+ylabel('Normalized Sum of Weighted Completion Times');
+axis([0 num_algorithms 0 2]);
+saveas(1, 'r_r_uniform', 'png');
+
+%%%% Facebook data
+% identical weights
 load facebook_raw.mat
 figure(7);
 bar(weighted_sum_same);
-set(gca, 'XTick', 1:26);
-set(gca, 'XTickLabel', {'10gargmast', '10gargratio', '10gargtimes', '10gargweight', '10mastmast', '10mastratio', '10masttimes', '10mastweight', 'boostfindbestalphamast', 'boostfindbestalpharatio', 'boostfindbestalphatimes', 'boostfindbestalphaweight', 'boostgargmast', 'boostgargratio', 'boostgargtimes', 'boostgargweight', 'boostmastmast', 'boostmastratio', 'boostmasttimes', 'boostmastweight', 'boostrelaxtimemast', 'boostrelaxtimeratio', 'boostrelaxtimetimes', 'boostrelaxtimeweight', 'greedy', 'online16'})
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
 set(gca, 'XTickLabelRotation', 60);
 title('Facebook Trace, identical weights');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 2]);
+axis([0 num_algorithms 0 2]);
 saveas(7, 'Facebook_Trace_identical_weights', 'png');
 
+%random weights
 figure(8);
 bar(weighted_sum_unif);
-set(gca, 'XTick', 1:26);
-set(gca, 'XTickLabel', {'10gargmast', '10gargratio', '10gargtimes', '10gargweight', '10mastmast', '10mastratio', '10masttimes', '10mastweight', 'boostfindbestalphamast', 'boostfindbestalpharatio', 'boostfindbestalphatimes', 'boostfindbestalphaweight', 'boostgargmast', 'boostgargratio', 'boostgargtimes', 'boostgargweight', 'boostmastmast', 'boostmastratio', 'boostmasttimes', 'boostmastweight', 'boostrelaxtimemast', 'boostrelaxtimeratio', 'boostrelaxtimetimes', 'boostrelaxtimeweight', 'greedy', 'online16'})
+set(gca, 'XTick', 1:num_algorithms);
+set(gca, 'XTickLabel', {'10gargmast', 'greedy', 'online16'})
 set(gca, 'XTickLabelRotation', 60);
 title('Facebook Trace, uniform weights');
 xlabel('Algorithm Type');
 ylabel('Normalized Sum of Weighted Completion Times');
-axis([0 27 0 2]);
-saveas(8, 'Facebook_Trace_uniform_weights', 'png');
+axis([0 num_algorithms 0 2]);
+saveas(8, 'Facebook_Trace_random_weights', 'png');
 
-%bar3([psparse, rsparse, pdense, rdense, puniform, runiform])
-%set(gca, 'YTick', 1:6);
-%set(gca, 'XTickLabel', {'psparse', 'rsparse', 'pdense', 'rdense', 'puniform', 'runiform'})
-%set(gca, 'YTick', 1:26);
-%set(gca, 'YTickLabel', {'10gargmast', '10gargratio', '10gargtimes', '10gargweight', '10mastmast', '10mastratio', '10masttimes', '10mastweight', 'boostfindbestalphamast', 'boostfindbestalpharatio', 'boostfindbestalphatimes', 'boostfindbestalphaweight', 'boostgargmast', 'boostgargratio', 'boostgargtimes', 'boostgargweight', 'boostmastmast', 'boostmastratio', 'boostmasttimes', 'boostmastweight', 'boostrelaxtimemast', 'boostrelaxtimeratio', 'boostrelaxtimetimes', 'boostrelaxtimeweight', 'greedy', 'online16'})
-%rotate3d on
 end

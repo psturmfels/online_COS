@@ -5,9 +5,9 @@ function generate_instances()
 num_instances = 50;
 N = 500;        % Number of jobs
 M = 50;         % Number of machines
-max_r = 2000;    % Maximum release time
-max_p = 2000;    % Maximum processing time
-max_w = 100;     % Maximum weight
+max_r = 5000;    % Maximum release time
+max_p = 5000;    % Maximum processing time
+max_w = 250;     % Maximum weight
 
 p_times = zeros(M, N, num_instances); 
 weights = zeros(N, num_instances);
